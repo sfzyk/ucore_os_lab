@@ -7,6 +7,7 @@ void main(void){
     printf("Child: EXEC lec7_1\n");
     exec_status=execve("lec7_1",NULL,NULL);
     printf("Child: Why would I execute?\n");
+    printf("%d",exec_status);
   } else {           // parent continues here
     printf("Parent: Whose your daddy?\n");
     child_status=wait(pid);

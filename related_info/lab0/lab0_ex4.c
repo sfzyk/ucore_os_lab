@@ -1,3 +1,4 @@
+#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
@@ -21,25 +22,31 @@ int main() {
         p = list_next(p);
     }
     //reverse list all node
+    printf("%d\n", ((struct entry *)p)->num);
     while ((p = list_prev(p)) != &head.node)
         printf("%d\n", ((struct entry *)p)->num);
     return 0;
 }
-
+#endif
 // other examples
 
 // ex1
 #if 0
-include "list.h";
+#include "list.h"
+#include <stdio.h>
+struct node_t{
+	int data;
+	list_entry_t * node_link;
+};
 
 void main() { 
-	node_t node1; 
+	struct node_t node1; 
 	node1.data = 1; 
-	list_entry_t *n1 = &nodes1.node_link; 
-	node_t node2; 
+	list_entry_t *n1 = node1.node_link; 
+	struct node_t node2; 
 	node2.data = 2; 
 	list_init(n1); 
-	list_add_after(n1, &nodes2.node_link); 
+	list_add_after(n1, node2.node_link); 
     printf("\n"); 
 }
 #endif
@@ -97,7 +104,7 @@ int main(int argc, const char * argv[])
     list_entry_t HS0,HS1,HS2,HS3;
 
     list_init(&HS0);
-    printf("%d %d %d\n",HS0.prev, HS0.next, &HS0);
+    printf("%d %d %d\n",(int)HS0.prev,(int)HS0.next,(int) &HS0);
 
     HS0.prev = NULL;
     HS0.next = &HS1;
@@ -108,16 +115,16 @@ int main(int argc, const char * argv[])
 
     list_add(&HS1, &HS3);
 
-    printf("%d %d %d\n",HS0.prev, HS0.next, &HS0);
-    printf("%d %d %d\n",HS1.prev, HS1.next, &HS1);
-    printf("%d %d %d\n",HS3.prev, HS3.next, &HS3);
-    printf("%d %d %d\n",HS2.prev, HS2.next, &HS2);
+    printf("%d %d %d\n",(int)HS0.prev, (int)HS0.next, (int)&HS0);
+    printf("%d %d %d\n",(int)HS1.prev, (int)HS1.next, (int)&HS1);
+    printf("%d %d %d\n",(int)HS3.prev, (int)HS3.next, (int)&HS3);
+    printf("%d %d %d\n",(int)HS2.prev, (int)HS2.next, (int)&HS2);
 
 
     list_del(&HS3);
-    printf("%d %d %d\n",HS0.prev, HS0.next, &HS0);
-    printf("%d %d %d\n",HS1.prev, HS1.next, &HS1);
-    printf("%d %d %d\n",HS2.prev, HS2.next, &HS2);
+    printf("%d %d %d\n",(int)HS0.prev, (int)HS0.next, (int)&HS0);
+    printf("%d %d %d\n",(int)HS1.prev, (int)HS1.next, (int)&HS1);
+    printf("%d %d %d\n",(int)HS2.prev, (int)HS2.next, (int)&HS2);
 }
 #endif
 
@@ -161,7 +168,7 @@ int getlength( list_entry_t *&elm )
 int main()
 {
     srand( (unsigned)time(NULL));
-    list_entry_t * root = new list_entry_t();
+    l4ist_entry_t * root = new list_entry_t();
     randlength( root );
     printf(" the length of this list is %d", getlength(root) );
 
@@ -219,7 +226,7 @@ int main() {
 //ex6
 #if 0
 #include <stdio.h>
-#include <list.h>
+#include "list.h"
 
 int main() {
     struct list_entry first, second, third;
@@ -243,7 +250,7 @@ int main() {
 #endif
 
 //ex7
-#if 0
+#if 1
 #include <stdio.h>
 #include <list.h>
 

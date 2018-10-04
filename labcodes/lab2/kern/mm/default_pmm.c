@@ -111,7 +111,8 @@ default_init_memmap(struct Page *base, size_t n) {
     for (; p != base + n; p ++) {
         assert(PageReserved(p));
         p->flags = p->property = 0;
-        set_page_ref(p, 0);
+		//SetPageProperty(p); //add by sf
+        set_page_ref(p, 0);	
     }
     base->property = n;
     SetPageProperty(base);
@@ -139,6 +140,9 @@ default_alloc_pages(size_t n) {
         if (page->property > n) {
             struct Page *p = page + n;
             p->property = page->property - n;
+
+			SetPageProperty(p);//add bysf 
+			
             list_add(&free_list, &(p->page_link));
     }
         nr_free -= n;
@@ -152,6 +156,7 @@ default_free_pages(struct Page *base, size_t n) {
     assert(n > 0);
     struct Page *p = base;
     for (; p != base + n; p ++) {
+		// 这个页面的 保留应该是0      Pageflag->Property为0  
         assert(!PageReserved(p) && !PageProperty(p));
         p->flags = 0;
         set_page_ref(p, 0);
@@ -254,7 +259,7 @@ default_check(void) {
     assert(!PageProperty(p0));
 
     list_entry_t free_list_store = free_list;
-    list_init(&free_list);
+    list_init(&free_list); // 内存泄漏? 
     assert(list_empty(&free_list));
     assert(alloc_page() == NULL);
 
@@ -300,7 +305,7 @@ default_check(void) {
 }
 
 const struct pmm_manager default_pmm_manager = {
-    .name = "default_pmm_manager",
+    .name = "default_pmm_manager_sf_first_fit",
     .init = default_init,
     .init_memmap = default_init_memmap,
     .alloc_pages = default_alloc_pages,

@@ -189,7 +189,7 @@ nr_free_pages(void) {
 /* pmm_init - initialize the physical memory management */
 static void
 page_init(void) {
-    struct e820map *memmap = (struct e820map *)(0x8000 + KERNBASE);
+    struct e820map *memmap = (struct e820map *)(0x8000 + KERNBASE); 
     uint64_t maxpa = 0;
 
     cprintf("e820map:\n");

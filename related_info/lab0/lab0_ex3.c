@@ -1,3 +1,5 @@
+#define ok
+#if 0
 #include <stdio.h>
 
 #define STS_IG32        0xE            // 32-bit Interrupt Gate
@@ -17,7 +19,7 @@ typedef unsigned uint32_t;
     (gate).gd_off_31_16 = (uint32_t)(off) >> 16;        \
 }
 
- /* Gate descriptors for interrupts and traps */
+ // Gate descriptors for interrupts and traps 
  struct gatedesc {
     unsigned gd_off_15_0 : 16;        // low 16 bits of offset in segment
     unsigned gd_ss : 16;            // segment selector
@@ -45,21 +47,20 @@ main(void)
     SETGATE(gintr, 0,1,2,3);
     intr=*(unsigned *)&(gintr);
     printf("intr is 0x%x\n",intr);
-    printf("gintr is 0x%llx\n",gintr);
+    printf("gintr is 0x%llx\n", (*((long long unsigned int *)&gintr)) );
     
     return 0;
 }
-
-// other examples
-//ex1
+#endif
 #if 0
 #include <stdlib.h>
 #include <stdio.h>
-#include <iostream>
-#include <cstring>
+
 
 #define STS_TG32 0xF
 #define STS_IG32 0xE
+
+typedef unsigned uint32_t;
 #define SETGATE( gate, istrap, sel, off, dpl) {            \
     (gate).gd_off_15_0 = (uint32_t)(off) & 0xffff;        \
     (gate).gd_ss = (sel);                                \
@@ -71,7 +72,7 @@ main(void)
     (gate).gd_p = 1;                                    \
     (gate).gd_off_31_16 = (uint32_t)(off) >> 16;        \
 }
-using namespace std;
+
 
 
 struct gatedesc {
@@ -92,7 +93,7 @@ struct gatedesc {
 
 int main()
 {   
-    gatedesc intr;
+    struct gatedesc intr;
 
     intr.gd_off_15_0 = 8;
     intr.gd_ss = 0;
@@ -104,21 +105,20 @@ int main()
     intr.gd_p = 0;
     intr.gd_off_31_16 = 0;
 
-    SETGATE( intr, 0,1,2,3);
+    SETGATE(intr,0,1,2,3);
 
-    printf( "%u\n",  intr);
-    printf( "%x", intr);
+    printf( "%u\n",  *(unsigned *)(&intr));
+    printf( "%x", *(unsigned *)(&intr));
 
 
 
     return 0;
 }
 #endif
-
 //ex2
-#if 0
+#if 1
 #include "stdlib.h"
-
+#include "stdio.h"
 struct gatedesc {
     unsigned gd_off_15_0 : 16;        // low 16 bits of offset in segment
     unsigned gd_ss : 16;            // segment selector
@@ -151,10 +151,10 @@ typedef unsigned int uint32_t;
 
 int main()
 {
-	unsigned intr;
+	unsigned long long intr;
 	intr=8;
 	SETGATE(intr, 0,1,2,3);
-	printf("%d", intr);
+	printf("%lld", intr);
 	return 0;
 }
 #endif

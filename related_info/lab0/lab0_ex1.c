@@ -9,6 +9,6 @@ void main()
         "stosl"
 	:
 	: "c" (count), "a" (value) , "D" (buf[0])
-	:
+	: "%ecx","%edi"
       );
 }
